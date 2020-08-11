@@ -24,7 +24,6 @@ void printDigits(int digits);
 void sendNTPpacket(IPAddress &address);
 
 void setupTimeConnection() {
-
   Serial.print("IP number assigned by DHCP is ");
   Serial.println(WiFi.localIP());
   Serial.println("Starting UDP");
@@ -37,13 +36,9 @@ void setupTimeConnection() {
   }
 }
 
-
-
 time_t prevDisplay = 0; // when the digital clock was displayed
 
-
-void digitalClockDisplay()
-{
+void digitalClockDisplay(){
   // digital clock display of the time
   Serial.print(hour());
   printDigits(minute());
@@ -57,8 +52,7 @@ void digitalClockDisplay()
   Serial.println();
 }
 
-void printDigits(int digits)
-{
+void printDigits(int digits){
   // utility for digital clock display: prints preceding colon and leading 0
   Serial.print(":");
   if (digits < 10)
@@ -76,8 +70,7 @@ long utcToLocalTime(long utc) {
 const int NTP_PACKET_SIZE = 48; // NTP time is in the first 48 bytes of message
 byte packetBuffer[NTP_PACKET_SIZE]; //buffer to hold incoming & outgoing packets
 
-time_t getNtpTime()
-{
+time_t getNtpTime(){
   IPAddress ntpServerIP; // NTP server's ip address
 
   while (Udp.parsePacket() > 0) ; // discard any previously received packets
