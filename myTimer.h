@@ -10,9 +10,11 @@ void RunEveryMinute();
 void setupTimer() {
   // do every 60 sec
   //    int tickEvent = t.every(60000, RunEveryMinute);
+  RunEveryMinute();
+ int tickEvent2 = t.every(300000, RunEveryMinute);
+  //  t.every(600000, RunEveryMinute);
 
-  t.every(600000, RunEveryMinute);
-  t.every(50, randomLED);
+  int tickEvent = t.every(50, sunrayRandomLED);
 
 }
 
@@ -22,14 +24,14 @@ void updateTimer() {
 
 void RunEveryMinute() {
   getWeatherInfo();
-  showTempOnLeds();
+  printWeather();
+  getTempColorForLeds();
   Serial.print("Temp feels like " );
   Serial.print( main_feels_like);
+
+  if (year() == 1970) {
+    getNtpTime();
+  }
   Serial.print(" and Time is " );
-
-if(year()==1970){
-  getNtpTime();
-}
-
   digitalClockDisplay();
 }

@@ -5,6 +5,8 @@ const char* city = "Leiden";
 const char* openweatherapikey = "a2ed31ee07568e51c5901c4ea33082df";
 const char* openWeatherMapHost = "api.openweathermap.org";
 
+void ShowLedPharsingJson(); // function is in led_UI.h
+
 void getWeatherInfo() {
 
   if (connectToWifi() == true) {
@@ -19,7 +21,7 @@ void getWeatherInfo() {
   // Use WiFiClient class to create TCP connections
   WiFiClient client;
   const int httpPort = 80;
-  
+
   if (!client.connect(openWeatherMapHost, httpPort)) {
     Serial.println("connection failed");
     return;
@@ -32,8 +34,8 @@ void getWeatherInfo() {
   url += "&units=metric";
   url += "&appid=";
   url += openweatherapikey;
-//  Serial.print("Requesting URL: ");
-//  Serial.println(url);
+  //  Serial.print("Requesting URL: ");
+  //  Serial.println(url);
 
   // Send the request to the openweathermap
   client.print(String("GET ") + url + " HTTP/1.1\r\n" +
@@ -49,7 +51,8 @@ void getWeatherInfo() {
 
     // Look for the empty line, after this you get the body (info you requested)
     if (line == "\r") {
-//      Serial.println("I read the last line");
+
+      ShowLedPharsingJson();
 
       //Deserialize the openweathermap info it into a Json
       parseJsonOpenWeatherMap(client.readStringUntil('\r'));
@@ -57,4 +60,21 @@ void getWeatherInfo() {
     }
   }
   Serial.println("closing connection");
+}
+
+void printWeather() {
+  Serial.print("Temp feels like " );
+  Serial.print( main_feels_like);
+  Serial.println("C ");
+  Serial.print("weather_0_id = " );
+  Serial.println(weather_0_id);
+  //   Serial.print(hour(utcToLocalTime(sys_sunrise)));
+  //  Serial.print(":");
+  //  Serial.print(minute(utcToLocalTime(sys_sunrise)));
+  //  Serial.print(" | Sunset at ");
+  //  Serial.print(hour(utcToLocalTime(sys_sunset)));
+  //  Serial.print(":");
+  //  Serial.print(minute(utcToLocalTime(sys_sunset)));
+  //  Serial.print(" | Time & date ");
+
 }
