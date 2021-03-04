@@ -17,4 +17,8 @@
 
   https://arduinojson.org/v6/assistant/
 
+
+  install huzzah board
+  https://learn.adafruit.com/adafruit-huzzah-esp8266-breakout/using-arduino-ide
+
 */

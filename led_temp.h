@@ -14,9 +14,10 @@ int currentTempColor[3];
 
 void setupTemperatureDiv();
 void getTempColorForLeds();
-void calculateTempColor(int pCurrentTempColor[]);
+void calculateTempColor();
 float returnProcentage(int a);
 void  turnOffLeds2();
+void setLoadColor(byte tempLoadColor0, byte tempLoadColor1, byte tempLoadColor2);
 
 void setupTemperatureDiv() {
   for (int i = 0; i < 7; i++) {
@@ -25,32 +26,37 @@ void setupTemperatureDiv() {
 }
 
 void getTempColorForLeds() {
+//  setLoadColor(currentTempColor[0],currentTempColor[1],currentTempColor[2]);
   turnOffLeds2();
-  calculateTempColor(currentTempColor);
+  calculateTempColor();
   Serial.print("the current calculated temp color is : ");
   for (int i = 0; i < 3; i++) {
     Serial.print(currentTempColor[i]);
     Serial.print(", ");
   }
   Serial.println("");
+
 }
 
+
+// temp function
 void printCurrentTempColor() {
   for (int i = 0; i < NUM_LEDS; i++) { // For each pixel...
+
     leds[i].setRGB( currentTempColor[0], currentTempColor[1], currentTempColor[2]);
   }
   FastLED.show();
 }
 
 
-void calculateTempColor(int pCurrentTempColor[]) {
+void calculateTempColor() {
   for (int i = 0; i < 6; i++) {                                                                             // check for 6 tempDiv
     if (main_feels_like >= (float)temperatureDiv[i] && main_feels_like <= (float)temperatureDiv[i + 1]) {   // check if temp is in range of this div
       float procentage = returnProcentage(i);
       Serial.print("calculated % within this temp div is : ");
       Serial.println(procentage);
       for (int b = 0; b < 3; b++) {
-        pCurrentTempColor[b] = round(tempColorSteps[i][b] * ((float)1 - procentage) + (tempColorSteps[i + 1][b] * procentage)) ;
+        currentTempColor[b] = round(tempColorSteps[i][b] * ((float)1 - procentage) + (tempColorSteps[i + 1][b] * procentage)) ;
       }
       return;
     }
@@ -58,11 +64,11 @@ void calculateTempColor(int pCurrentTempColor[]) {
   // if temp is not between -6 and 30
   if (main_feels_like > (float)temperatureDiv[6]) { // if its > 30 pick warm color
     for (int b = 0; b < 3; b++)
-      pCurrentTempColor[b] = tempColorSteps[6][b] ;
+      currentTempColor[b] = tempColorSteps[6][b] ;
   }
   else if (main_feels_like < (float)temperatureDiv[0]) { // if its colder then -6 pick cold color
     for (int b = 0; b < 3; b++)
-      pCurrentTempColor[b] = tempColorSteps[0][b] ;
+      currentTempColor[b] = tempColorSteps[0][b] ;
   }
 }
 
@@ -70,4 +76,34 @@ float returnProcentage(int a) {
   float bTemp = main_feels_like + temperatureStep;
   bTemp = bTemp - (temperatureStep * a);
   return bTemp / 6;
+}
+
+
+void fillBackground();
+
+void readSerialMonitor() {
+  float serialInput;
+  float previous_main_feels_like = main_feels_like;
+
+  //  while (Serial.available() == 0) {
+  //  if (Serial.available() > 0) {
+  while (Serial.available()) {
+    serialInput = Serial.parseInt();
+    if (isDigit(serialInput)) {
+      Serial.print("getting float from you : ");
+      main_feels_like = serialInput;
+      Serial.println(serialInput);
+    }
+    if (main_feels_like = ! previous_main_feels_like) {
+      calculateTempColor();
+//      getTempColorForLeds();
+      fillBackground();
+      //        calculateTempColor(currentTempColor);
+      previous_main_feels_like = main_feels_like;
+    }
+
+    //    Serial.print();
+    //    main_feels_like =
+    //    }
+  }             // wait for user input
 }

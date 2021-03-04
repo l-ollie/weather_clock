@@ -10,11 +10,12 @@ void RunEveryMinute();
 void setupTimer() {
   // do every 60 sec
   //    int tickEvent = t.every(60000, RunEveryMinute);
-  RunEveryMinute();
- int tickEvent2 = t.every(300000, RunEveryMinute);
-  //  t.every(600000, RunEveryMinute);
+// int tickEvent2 = t.every(300000, RunEveryMinute);
+    t.every(300000, RunEveryMinute);
 
-  int tickEvent = t.every(50, sunrayRandomLED);
+//  int tickEvent = t.every(50, sunrayRandomLED);
+  
+  t.every(50, sunrayRandomLED);
 
 }
 

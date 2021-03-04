@@ -30,14 +30,14 @@ void getTwilightInfo() {
   Serial.print("Requesting URL: ");
   Serial.println(url);
 
-  // Send the request to the openweathermap
+  // Send the request to the sunrise-sunset
   client.print(String("GET ") + url + " HTTP/1.1\r\n" +
                "Host: " + sinriseSunsetHost + "\r\n" +
                "Connection: close\r\n\r\n");
 
   delay(500);
 
-  // Read all the lines you get back from openweathermap
+  // Read all the lines you get back from sunrise-sunset
   while (client.available()) {
     String line = client.readStringUntil('\n');
     //    Serial.println(line);
@@ -46,7 +46,7 @@ void getTwilightInfo() {
     if (line.startsWith("{")) {
 
 
-      //Deserialize the openweathermap info it into a Json
+      //Deserialize the sunrise-sunset info it into a Json
       parseJsonSunrise(line);
       line = client.readStringUntil('\r');
 

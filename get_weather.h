@@ -5,15 +5,18 @@ const char* city = "Leiden";
 const char* openweatherapikey = "a2ed31ee07568e51c5901c4ea33082df";
 const char* openWeatherMapHost = "api.openweathermap.org";
 
-void ShowLedPharsingJson(); // function is in led_UI.h
+void ShowLedRandomPixCol(byte pixCol0, byte pixCol1, byte pixCol2 ); // function is in led_UI.h
+void setLoadColor(byte tempLoadColor0, byte tempLoadColor1, byte tempLoadColor2);
 
 void getWeatherInfo() {
+  //  setLoadColor(0, 100, 200);
 
   if (connectToWifi() == true) {
   } else {
     Serial.println("getWeatherInfo no wifi");
     return;
   }
+  ShowLedRandomPixCol(0, 0, 200);
 
   Serial.print("connecting to ");
   Serial.println(openWeatherMapHost);
@@ -52,7 +55,7 @@ void getWeatherInfo() {
     // Look for the empty line, after this you get the body (info you requested)
     if (line == "\r") {
 
-      ShowLedPharsingJson();
+      ShowLedRandomPixCol(0, 200, 0);
 
       //Deserialize the openweathermap info it into a Json
       parseJsonOpenWeatherMap(client.readStringUntil('\r'));
@@ -68,13 +71,15 @@ void printWeather() {
   Serial.println("C ");
   Serial.print("weather_0_id = " );
   Serial.println(weather_0_id);
-  //   Serial.print(hour(utcToLocalTime(sys_sunrise)));
-  //  Serial.print(":");
-  //  Serial.print(minute(utcToLocalTime(sys_sunrise)));
-  //  Serial.print(" | Sunset at ");
-  //  Serial.print(hour(utcToLocalTime(sys_sunset)));
-  //  Serial.print(":");
-  //  Serial.print(minute(utcToLocalTime(sys_sunset)));
-  //  Serial.print(" | Time & date ");
+
+//  Serial.print(" | Sunset at ");
+//  Serial.print(hour(sys_sunset));
+//  Serial.print(":");
+//  Serial.print(minute(sys_sunset));
+//  Serial.print(" | Sunrise at");
+//
+//  Serial.print(hour(sys_sunrise));
+//  Serial.print(":");
+//  Serial.print(minute(sys_sunrise));
 
 }

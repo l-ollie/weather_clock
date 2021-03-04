@@ -27,7 +27,7 @@ const size_t capacitySunriseSunset = JSON_OBJECT_SIZE(2) + JSON_OBJECT_SIZE(10) 
 StaticJsonDocument <capacitySunriseSunset> docSunriseSunset;
 
 
-void savingValues();
+void savingValuesOpenWeatherMaps();
 void parseJson(String incommingMsg);
 void savingValuesSunrise ();
 
@@ -41,7 +41,7 @@ void parseJsonOpenWeatherMap(String incommingMsg) {
     Serial.print(F("deserializeJson() failed with code "));
     Serial.println(err.c_str());
   }
-  savingValues();
+  savingValuesOpenWeatherMaps();
 }
 
 void parseJsonSunrise(String incommingMsg) {
@@ -69,7 +69,7 @@ void savingValuesSunrise () {
 }
 
 
-void savingValues () {
+void savingValuesOpenWeatherMaps () {
   weather_0 = docOpenWeatherMap["weather"][0];
   weather_0_id = weather_0["id"];
   main = docOpenWeatherMap["main"];

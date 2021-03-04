@@ -1,11 +1,12 @@
 #include <ESP8266WiFi.h>
 
-const char* ssid     = "VGV7519632769";
-const char* password = "ukPf3dU6Kd9P";
+const char* ssid     = "H369AEA6A4F-2.4GHz";
+const char* password = "7EF267E3CC5D";
 void ledConnectToWifi(int inputCount); // function is in led_UI.h
 void turnOffLeds2();
 
 bool connectToWifi() {
+  
   Serial.println("Connecting to WiFi network");
   // Check if already conneted to a WiFi network
   if (WiFi.status() == WL_CONNECTED) {
