@@ -16,7 +16,6 @@ void setup() {
   delay(100);
   getWeatherInfo();
   //getTwilightInfo();
-  delay(4);
   setupTimeConnection();
   setupTimer();
   printWeather();

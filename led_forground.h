@@ -36,9 +36,9 @@ void forgroundStart() {
   if (previousSellectForground != sellectForground) {
     Serial.print("weather_0_id = " );
     Serial.print(weather_0_id);
-    Serial.print(" | and forground program selectd : " );
+    Serial.print(" | and forground program selected : " );
     Serial.print(sellectForground);
-    Serial.print(" | ");
+    Serial.println(" ");
 
     previousSellectForground = sellectForground;
   }

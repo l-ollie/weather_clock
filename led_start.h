@@ -60,6 +60,6 @@ runTwighlight();
 void turnOffLeds() {
   FastLED.clear();
   FastLED.show();
-  Serial.println(" Turning off leds");
-  delay(500);
+  Serial.println("Turning off leds1");
+  delay(50);
 }

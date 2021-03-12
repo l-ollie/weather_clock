@@ -52,7 +52,7 @@ void turnOffLeds2() {
     }
   }
   FastLED.clear();
-  Serial.println(" Turning off leds");
+  Serial.println("Turning off leds2");
 }
 
 void setLoadColor(byte tempLoadColor0, byte tempLoadColor1, byte tempLoadColor2) {

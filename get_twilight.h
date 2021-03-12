@@ -52,5 +52,5 @@ void getTwilightInfo() {
 
     }
   }
-  Serial.println("closing connection");
+  Serial.println("get twilight done");
 }

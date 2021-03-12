@@ -62,14 +62,16 @@ void getWeatherInfo() {
 
     }
   }
-  Serial.println("closing connection");
+  Serial.println("get weather done");
 }
 
 void printWeather() {
-  Serial.print("Temp feels like " );
+    Serial.print("Current temp " );
+  Serial.print( current_temp);
+  Serial.print(" | Temp feels like " );
   Serial.print( main_feels_like);
-  Serial.println("C ");
-  Serial.print("weather_0_id = " );
+  Serial.print("C ");
+  Serial.print(" | weather_0_id = " );
   Serial.println(weather_0_id);
 
 //  Serial.print(" | Sunset at ");

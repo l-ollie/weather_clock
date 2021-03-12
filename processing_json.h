@@ -7,6 +7,8 @@ JsonObject weather_0;
 int weather_0_id;
 JsonObject main;
 float main_feels_like;
+float current_temp;
+
 JsonObject wind;
 float wind_speed;
 long dt;
@@ -74,6 +76,7 @@ void savingValuesOpenWeatherMaps () {
   weather_0_id = weather_0["id"];
   main = docOpenWeatherMap["main"];
   main_feels_like = main["feels_like"];
+    current_temp = main["temp"];
   wind = docOpenWeatherMap["wind"];
   wind_speed = wind["speed"];
   sys = docOpenWeatherMap["sys"];

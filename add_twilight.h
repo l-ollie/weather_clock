@@ -21,7 +21,7 @@ byte previousMinute;
 void applyBrightness(byte currentBrightness ) {
   int convertedCurrentBrightness = map(currentBrightness, 0, sunSetRiseTotalMinutes, minBrightness, maxBrightness);
   FastLED.setBrightness( convertedCurrentBrightness);
-  Serial.print("applyBrightness : ");
+  Serial.print("apply twilight brightness : ");
   Serial.print(convertedCurrentBrightness);
   Serial.print(" | ");
 
@@ -34,33 +34,33 @@ void calculateTwilight() { // this function is being runed every 60 sec
   int sunset = sys_sunset + addLocalTime;
   int sunrise = sys_sunrise + addLocalTime;
   int sunTimeMarginSeconds = (sunSetRiseTotalMinutes / 2) * 60; // get half of the rise time minutes and convert into seconds
-  int tempNow = now();
+  int currentTime = now();
   int sunsetBegin = sunset - sunTimeMarginSeconds;
   int sunsetEnd = sunset + sunTimeMarginSeconds;
   int sunriseBegin = sunrise - sunTimeMarginSeconds;
   int sunriseEnd = sunrise + sunTimeMarginSeconds;
 
-  if (tempNow > sunriseEnd && tempNow < sunsetBegin) {  // check if its daytime
+  if (currentTime > sunriseEnd && currentTime < sunsetBegin) {  // check if its daytime
     applyBrightness(sunSetRiseTotalMinutes); // 0 is daytime
-        Serial.print(" brightness night time ");
+        Serial.print(" day/night mode = day ");
 
-  } else if (tempNow > sunsetBegin && tempNow < sunsetEnd) { // if not check if its sunset time
-    int b = sunSetRiseTotalMinutes - ((tempNow - sunsetBegin) / 60);
-    Serial.print("sunset calculated brightness is ");
+  } else if (currentTime > sunsetBegin && currentTime < sunsetEnd) { // if not check if its sunset time
+    int b = sunSetRiseTotalMinutes - ((currentTime - sunsetBegin) / 60);
+    Serial.print("sunset time | calculated brightness is ");
     Serial.print(b);
     Serial.print(" | ");
     applyBrightness(b);
 
-    //    applyBrightness(floor((tempNow - sunsetBegin) / 60) );
-  } else if (tempNow > sunsetEnd && tempNow < sunriseBegin) { // if not check if its night time
+    //    applyBrightness(floor((currentTime - sunsetBegin) / 60) );
+  } else if (currentTime > sunsetEnd && currentTime < sunriseBegin) { // if not check if its night time
     applyBrightness(0 );
-    Serial.print(" brightness day time ");
+    Serial.print(" day/night mode = night ");
 
-  } else if (tempNow > sunriseBegin && tempNow < sunriseEnd) { // if not check if its sunrise time
-    applyBrightness(sunSetRiseTotalMinutes - floor((sunsetBegin - tempNow) / 60));
+  } else if (currentTime > sunriseBegin && currentTime < sunriseEnd) { // if not check if its sunrise time
+    applyBrightness(sunSetRiseTotalMinutes - floor((sunsetBegin - currentTime) / 60));
 
-    int b = (sunsetBegin - tempNow) / 60;
-    Serial.print("sunrise calculated brightness is ");
+    int b = (sunsetBegin - currentTime) / 60;
+    Serial.print("sunrise time | calculated brightness is ");
     Serial.print(b);
     Serial.print(" | ");
     applyBrightness(b);
