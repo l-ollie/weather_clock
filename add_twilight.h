@@ -8,9 +8,9 @@ bool nightTime = false;
 
 byte sunSetRiseTotalMinutes = 120; // total time for night tot day transfer
 byte maxBrightness = 255;
-byte minBrightness = 1;
+byte minBrightness = 30;
 
-int currentBrightness = 0;
+byte currentBrightness = 0;
 byte brightnessSpeed = 1;
 
 byte previousBrightness;
@@ -34,15 +34,15 @@ void calculateTwilight() { // this function is being runed every 60 sec
   int sunset = sys_sunset + addLocalTime;
   int sunrise = sys_sunrise + addLocalTime;
   int sunTimeMarginSeconds = (sunSetRiseTotalMinutes / 2) * 60; // get half of the rise time minutes and convert into seconds
-  int currentTime = now();
+  unsigned long int currentTime = millis();
   int sunsetBegin = sunset - sunTimeMarginSeconds;
   int sunsetEnd = sunset + sunTimeMarginSeconds;
   int sunriseBegin = sunrise - sunTimeMarginSeconds;
   int sunriseEnd = sunrise + sunTimeMarginSeconds;
 
   if (currentTime > sunriseEnd && currentTime < sunsetBegin) {  // check if its daytime
-    applyBrightness(sunSetRiseTotalMinutes); // 0 is daytime
-        Serial.print(" day/night mode = day ");
+    applyBrightness(maxBrightness); // 0 is daytime
+    Serial.print(" day/night mode = day ");
 
   } else if (currentTime > sunsetBegin && currentTime < sunsetEnd) { // if not check if its sunset time
     int b = sunSetRiseTotalMinutes - ((currentTime - sunsetBegin) / 60);

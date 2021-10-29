@@ -6,8 +6,7 @@ void ledConnectToWifi(int inputCount); // function is in led_UI.h
 void turnOffLeds2();
 
 bool connectToWifi() {
-  
-  Serial.println("Connecting to WiFi network");
+    Serial.println("Connecting to WiFi network");
   // Check if already conneted to a WiFi network
   if (WiFi.status() == WL_CONNECTED) {
     Serial.println("Already conneted to WiFi network");
@@ -19,13 +18,14 @@ bool connectToWifi() {
   Serial.print("Connecting to ");
   Serial.println(ssid);
 
+  WiFi.mode(WIFI_STA);
   WiFi.begin(ssid, password);
   int loadingAmout = 0;
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
     ledConnectToWifi(loadingAmout);
     loadingAmout++;
-    if(loadingAmout>72){
+    if(loadingAmout>NUM_LEDS){
         return false;
     }
     Serial.println(WiFi.status());
@@ -34,3 +34,7 @@ bool connectToWifi() {
   turnOffLeds2();
   return true;
 }
+
+//void closingConnection(){
+// client.stop();
+//}

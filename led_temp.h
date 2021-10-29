@@ -1,6 +1,6 @@
 byte tempColorSteps[7][3] = {
   {0, 0, 255},    // 0 - dark blue -6 - 0
-  {255, 255, 255},  // 1 - white    0 - 6
+  {200, 200, 200},  // 1 - white    0 - 6
   {0, 255, 255},  // 2 - light blue 6 - 12
   {0, 255, 0},    // 3 - green      12 - 18
   {255, 255, 0},  // 4 - yellow     18 - 24
@@ -76,34 +76,4 @@ float returnProcentage(int a) {
   float bTemp = main_feels_like + temperatureStep;
   bTemp = bTemp - (temperatureStep * a);
   return bTemp / 6;
-}
-
-
-void fillBackground();
-
-void readSerialMonitor() {
-  float serialInput;
-  float previous_main_feels_like = main_feels_like;
-
-  //  while (Serial.available() == 0) {
-  //  if (Serial.available() > 0) {
-  while (Serial.available()) {
-    serialInput = Serial.parseInt();
-    if (isDigit(serialInput)) {
-      Serial.print("getting float from you : ");
-      main_feels_like = serialInput;
-      Serial.println(serialInput);
-    }
-    if (main_feels_like = ! previous_main_feels_like) {
-      calculateTempColor();
-//      getTempColorForLeds();
-      fillBackground();
-      //        calculateTempColor(currentTempColor);
-      previous_main_feels_like = main_feels_like;
-    }
-
-    //    Serial.print();
-    //    main_feels_like =
-    //    }
-  }             // wait for user input
 }

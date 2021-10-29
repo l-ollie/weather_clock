@@ -7,6 +7,8 @@ const char* openWeatherMapHost = "api.openweathermap.org";
 
 void ShowLedRandomPixCol(byte pixCol0, byte pixCol1, byte pixCol2 ); // function is in led_UI.h
 void setLoadColor(byte tempLoadColor0, byte tempLoadColor1, byte tempLoadColor2);
+void setWeatherType();
+
 
 void getWeatherInfo() {
   //  setLoadColor(0, 100, 200);
@@ -62,26 +64,29 @@ void getWeatherInfo() {
 
     }
   }
-  Serial.println("get weather done");
+  Serial.println("get weather done and closing connection");
+  client.stop();
+  setWeatherType();
 }
 
 void printWeather() {
-    Serial.print("Current temp " );
+  Serial.print("Current temp " );
   Serial.print( current_temp);
   Serial.print(" | Temp feels like " );
   Serial.print( main_feels_like);
   Serial.print("C ");
   Serial.print(" | weather_0_id = " );
   Serial.println(weather_0_id);
-
-//  Serial.print(" | Sunset at ");
-//  Serial.print(hour(sys_sunset));
-//  Serial.print(":");
-//  Serial.print(minute(sys_sunset));
-//  Serial.print(" | Sunrise at");
-//
-//  Serial.print(hour(sys_sunrise));
-//  Serial.print(":");
-//  Serial.print(minute(sys_sunrise));
+  Serial.print(" | windspeed = " );
+  Serial.println(wind_speed);
+  //  Serial.print(" | Sunset at ");
+  //  Serial.print(hour(sys_sunset));
+  //  Serial.print(":");
+  //  Serial.print(minute(sys_sunset));
+  //  Serial.print(" | Sunrise at");
+  //
+  //  Serial.print(hour(sys_sunrise));
+  //  Serial.print(":");
+  //  Serial.print(minute(sys_sunrise));
 
 }
